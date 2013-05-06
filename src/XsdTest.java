@@ -47,6 +47,11 @@ public class XsdTest {
 
     }
 
+    private static void doAttr(XSAttributeUse attributeUse) {
+        XSSimpleType type = attributeUse.getDecl().getType();
+        System.out.println(tt + attributeUse.getDecl().getName() + z + type);
+    }
+
     public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SAXException {
         XSOMParser parser = new XSOMParser();
         parser.parse("src/grammar/html_5.xsd");
@@ -57,7 +62,11 @@ public class XsdTest {
             XSElementDecl elementDecl = iterator.next();
             System.out.println(elementDecl.getName());
             if (elementDecl.getType().isComplexType()) {
-                doXSParticle(elementDecl.getType().asComplexType().getContentType().asParticle());
+                XSComplexType complexType = elementDecl.getType().asComplexType();
+                for (XSAttributeUse attr : complexType.getDeclaredAttributeUses()) {
+                    doAttr(attr);
+                }
+                doXSParticle(complexType.getContentType().asParticle());
             }
         }
     }
