@@ -21,6 +21,7 @@ import com.sun.xml.internal.xsom.parser.XSOMParser;
 import org.xml.sax.SAXException;
 
 import java.util.Iterator;
+import java.util.Map;
 
 public class XsdTest {
     private final static String t = "   ";
@@ -52,11 +53,21 @@ public class XsdTest {
         System.out.println(tt + attributeUse.getDecl().getName() + z + type);
     }
 
+    private static void doAttrDecl(XSAttributeDecl attributeDecl) {
+        System.out.println(attributeDecl.getType());
+    }
+
     public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SAXException {
         XSOMParser parser = new XSOMParser();
         parser.parse("src/grammar/html_5.xsd");
         XSSchemaSet schemaSet = parser.getResult();
         XSSchema schema = schemaSet.getSchema("html-5");
+
+        for (Map.Entry<String, XSAttributeDecl> entry : schema.getAttributeDecls().entrySet()) {
+            System.out.println(entry.getKey());
+            doAttrDecl(entry.getValue());
+        }
+        XSElementDecl element = schema.getElementDecl("input");
 
         for (Iterator<XSElementDecl> iterator = schema.iterateElementDecls(); iterator.hasNext(); ) {
             XSElementDecl elementDecl = iterator.next();
