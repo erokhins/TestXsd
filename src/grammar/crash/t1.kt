@@ -29,17 +29,19 @@ class DP {
 }
 
 var A.bar by DP()  //work
-var A.foo: String by DP() //error generate LightClass
+public var A.foo: String by DP() //error generate LightClass
 
 class B: A
 
 fun main(args: Array<String>) {
-    var a: String = B().bar
-    println(B().bar)
+    var a: String = B().foo
+    println(B().foo)
     NewTag().h2 {
         +""
     }
 }
+
+
 
 
 

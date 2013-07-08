@@ -14,29 +14,33 @@
  * limitations under the License.
  */
 
-package grammar.t2
+package grammar.t3
+import java.lang.Deprecated as dep1
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy
+
+Retention(RetentionPolicy.SOURCE) annotation class dep
 
 trait A {
-    public fun foo(): Int
-}
+    Retention(RetentionPolicy.CLASS) fun foo1(a: Int) {
+        throw UnsupportedOperationException()
+    }
 
-open class B {
-    protected fun foo(): Int {
-        return 5
+    deprecated("") fun foo2(a: Int) {
+        throw UnsupportedOperationException()
     }
 }
 
 
-class C: B(), A {
+class B: A {
+    dep override fun foo1(a: Int) {
 
+    }
 }
+
+
 
 fun main(args : Array<String>) {
-    println(C().foo())
+    B().foo2(1)
 }
 
-class Foo(val foo: (a: Int) -> Int) {
-    public fun foo(a: Int): Int {
-        return this.foo(a)
-    }
-}

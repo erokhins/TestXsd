@@ -14,29 +14,18 @@
  * limitations under the License.
  */
 
-package grammar.t2
+package grammar.t4
 
-trait A {
-    public fun foo(): Int
+
+trait A
+trait B
+
+var A.foo = 2
+var B.foo = 3
+
+class C: A,B
+
+fun main(args: Array<String>) {
+    println(C())
 }
 
-open class B {
-    protected fun foo(): Int {
-        return 5
-    }
-}
-
-
-class C: B(), A {
-
-}
-
-fun main(args : Array<String>) {
-    println(C().foo())
-}
-
-class Foo(val foo: (a: Int) -> Int) {
-    public fun foo(a: Int): Int {
-        return this.foo(a)
-    }
-}

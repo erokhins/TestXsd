@@ -68,7 +68,7 @@ public class XsdTest {
             doAttrDecl(entry.getValue());
         }
         XSElementDecl element = schema.getElementDecl("input");
-
+        XSType type = element.getType();
         for (Iterator<XSElementDecl> iterator = schema.iterateElementDecls(); iterator.hasNext(); ) {
             XSElementDecl elementDecl = iterator.next();
             System.out.println(elementDecl.getName());

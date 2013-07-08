@@ -13,30 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package grammar.t2
+package grammar.crash.t6
 
 trait A {
-    public fun foo(): Int
+    fun foo(bar: Int)
 }
 
 open class B {
-    protected fun foo(): Int {
-        return 5
+    fun foo(bar: Int = 2) {
+
     }
 }
 
 
-class C: B(), A {
 
-}
+class C: B(), A
 
-fun main(args : Array<String>) {
-    println(C().foo())
-}
-
-class Foo(val foo: (a: Int) -> Int) {
-    public fun foo(a: Int): Int {
-        return this.foo(a)
-    }
+fun main(args: Array<String>) {
+    assert(false, "sdf")
+    C().foo()
 }

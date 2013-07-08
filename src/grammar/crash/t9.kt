@@ -13,30 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package grammar.crash.t9
 
-package grammar.t2
-
-trait A {
-    public fun foo(): Int
+class A
+object B {
+    fun A.foo() {}
 }
 
-open class B {
-    protected fun foo(): Int {
-        return 5
+
+fun sd() {
+    val a = A()
+    fun B.s() {
+        a.foo()
     }
-}
-
-
-class C: B(), A {
-
-}
-
-fun main(args : Array<String>) {
-    println(C().foo())
-}
-
-class Foo(val foo: (a: Int) -> Int) {
-    public fun foo(a: Int): Int {
-        return this.foo(a)
+    with(B) {
+        a.foo()
     }
 }

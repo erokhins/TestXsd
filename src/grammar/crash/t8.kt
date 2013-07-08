@@ -13,30 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package grammar.crash.t8
+import grammar.crash.t8.A.*
 
-package grammar.t2
-
-trait A {
-    public fun foo(): Int
+enum class A {
+    e1
+    e2
 }
 
-open class B {
-    protected fun foo(): Int {
-        return 5
+class B(val a: A)
+
+val B.foo: Int
+    get() {
+        return when (a) {  // compile ok, but plugin report "'when' must contains 'else'"
+            A.e1 -> 1
+            A.e2 -> 2
+        }
     }
-}
 
-
-class C: B(), A {
-
-}
-
-fun main(args : Array<String>) {
-    println(C().foo())
-}
-
-class Foo(val foo: (a: Int) -> Int) {
-    public fun foo(a: Int): Int {
-        return this.foo(a)
-    }
+fun main(args: Array<String>) {
+    println(B(A.e1).foo)
 }

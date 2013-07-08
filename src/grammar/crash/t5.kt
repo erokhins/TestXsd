@@ -13,30 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package grammar.crash.t5
 
-package grammar.t2
 
-trait A {
-    public fun foo(): Int
+class A {
+    fun foo(): Int {return 4}
+
+    fun bar(f: A.() -> Unit = {}) {}
 }
 
-open class B {
-    protected fun foo(): Int {
-        return 5
+class B {
+    class D {
+        {
+            A().foo()
+            A().bar {
+//                this.foo()
+               // this.foo()   // no error
+//                foo()        // Kotlin: Expression is inaccessible from a nested class 'D', use 'inner' keyword to make the class inner
+            }
+        }
     }
 }
 
-
-class C: B(), A {
-
-}
-
-fun main(args : Array<String>) {
-    println(C().foo())
-}
-
-class Foo(val foo: (a: Int) -> Int) {
-    public fun foo(a: Int): Int {
-        return this.foo(a)
+val A.a: Int
+    get() {
+        return this.foo()
     }
+
+fun main(args: Array<String>) {
+    B()
 }

@@ -14,29 +14,17 @@
  * limitations under the License.
  */
 
-package grammar.t2
+package grammar.t5
+
 
 trait A {
-    public fun foo(): Int
+    val bar: String?
+    val foo: Collection<Int>?
 }
 
-open class B {
-    protected fun foo(): Int {
-        return 5
+    fun getA(): A {
+        return object : A {
+            override val bar: String? = null
+            override val foo: Collection<Int>? = null
+        }
     }
-}
-
-
-class C: B(), A {
-
-}
-
-fun main(args : Array<String>) {
-    println(C().foo())
-}
-
-class Foo(val foo: (a: Int) -> Int) {
-    public fun foo(a: Int): Int {
-        return this.foo(a)
-    }
-}
