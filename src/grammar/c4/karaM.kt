@@ -13,42 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package grammar.c4.t2
+package grammar.c4.kara
 
+import grammar.c4.depr.*
 
-open class TagClass {
-    var id = ""
-}
+open class TagAttributes
+    var TagAttributes.id = ""
 
-class Tag<T: TagClass>(val containingTag: Tag<out TagClass>?, val t: T) {
+class Tag<out T: TagAttributes>(val containingTag: Tag<TagAttributes>?, val t: T) {
     val attr: T = t
     fun attr(f: T.() -> Unit) {
 
     }
+
+    fun <T : TagAttributes> build(f: Tag<T>.() -> Unit, t:T) {
+        val tagT = Tag<T>(this, t)
+        tagT.f()
+        println(t)
+    }
 }
 
-class A: TagClass() {
-    var href = ""
-}
 
-class INPUT: TagClass() {
-    var value = ""
-}
+class A: TagAttributes()
+    var A.href = ""
 
-class TABLE: TagClass()
-class TR: TagClass()
-class TD: TagClass()
+class INPUT: TagAttributes()
+    var INPUT.value = ""
 
-fun Tag<out TagClass>.a(f: Tag<A>.() -> Unit) {}
-fun Tag<out TagClass>.input(f: Tag<INPUT>.() -> Unit) {}
-fun Tag<out TagClass>.table(f: Tag<TABLE>.() -> Unit) {}
-fun Tag<out TagClass>.tr(f: Tag<TR>.() -> Unit) {}
-fun Tag<out TagClass>.td(f: Tag<TD>.() -> Unit) {}
+class TABLE: TagAttributes()
+class TR: TagAttributes()
+class TH: TagAttributes()
+class TD: TagAttributes()
+
+fun Tag<TagAttributes>.a(f: Tag<A>.() -> Unit) = build(f, A())
+fun Tag<TagAttributes>.input(f: Tag<INPUT>.() -> Unit) = build(f, INPUT())
+fun Tag<TagAttributes>.table(f: Tag<TABLE>.() -> Unit) = build(f, TABLE())
+fun Tag<TagAttributes>.tr(f: Tag<TR>.() -> Unit) = build(f, TR())
+fun Tag<TagAttributes>.td(f: Tag<TD>.() -> Unit) = build(f, TD())
+fun Tag<TagAttributes>.th(f: Tag<TH>.() -> Unit) = build(f, TH())
 
 
 fun main(args: Array<String>) {
     Tag<A>(null, A()).table {
         tr {
+            th {
+            }
             td {
                 attr {
                     id = ""
