@@ -13,27 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package grammar.crash.t11
+package grammar.c2.t3
 
 
 
-class B {
-    val attr = Attr()
-    class Attr {
-        var name: String = ""
-        var width: Int = 0
-        fun invoke(f: Attr.() -> Unit) {
-            this.f()
-        }
-    }
+open class A {
+    val a = 1
+}
+class B: A() {
+    val b = 2
 }
 
-fun main(args: Array<String>) {
-    with(B()) {
-        attr.name = "43"
-        attr {
-            name = "35"
-            width = 2
-        }
+fun foo(f: A.() -> Unit) {}  // 1
+fun foo(f: B.() -> Unit) {}  // 2
+
+
+fun test() {
+    foo {
+        //b // why unresolved?
     }
 }

@@ -13,27 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package grammar.crash.t11
+package grammar.c3.t12
+
+import java.util.HashMap
 
 
-
-class B {
-    val attr = Attr()
-    class Attr {
-        var name: String = ""
-        var width: Int = 0
-        fun invoke(f: Attr.() -> Unit) {
-            this.f()
-        }
+class MapSetter<K, V>(val map: MutableMap<K, V>) {
+    public fun K.modAssign(v : V) {
+        map.put(this, v)
     }
+}
+
+fun <K, V> MutableMap<K, V>.putAll(f: MapSetter<K, V>.() -> Unit) {
+    MapSetter<K, V>(this).f()
 }
 
 fun main(args: Array<String>) {
-    with(B()) {
-        attr.name = "43"
-        attr {
-            name = "35"
-            width = 2
-        }
+    val map = HashMap<String, Int>()
+    map.putAll {
+        "a" %= 1
+        "b" %= 2
+        "c" %= 3
     }
+    println(map)
 }
+

@@ -13,27 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package grammar.crash.t11
+package grammar.kk.t2
+
+import grammar.kk.t2.AttributeElement.attr
 
 
+//class I: A<I>
 
-class B {
-    val attr = Attr()
-    class Attr {
-        var name: String = ""
-        var width: Int = 0
-        fun invoke(f: Attr.() -> Unit) {
-            this.f()
-        }
-    }
+
+open class AttributeElement {
+    object attr
+}
+
+
+class Attr
+
+
+class A: AttributeElement() {
+    val attr.a1 = 3
+    val attr.a2 = 5
+}
+
+class B: AttributeElement() {
+    val attr.a4 = 6
 }
 
 fun main(args: Array<String>) {
-    with(B()) {
-        attr.name = "43"
-        attr {
-            name = "35"
-            width = 2
+    with(A()) {
+        println(attr.a1)
+        with(B()) {
+            println(attr.a2)
         }
     }
+
 }

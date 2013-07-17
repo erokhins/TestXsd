@@ -13,27 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package grammar.crash.t11
+package grammar.c2.t9
 
-
+open class A {
+    public fun invoke(f: A.() -> Unit) {}
+}
 
 class B {
-    val attr = Attr()
-    class Attr {
-        var name: String = ""
-        var width: Int = 0
-        fun invoke(f: Attr.() -> Unit) {
-            this.f()
-        }
-    }
+    public fun invoke(f: B.() -> Unit) {}
 }
 
+open class C
+val C.attr = A()
+
+open class D: C()
+val D.attr = B()
+
+
 fun main(args: Array<String>) {
-    with(B()) {
-        attr.name = "43"
-        attr {
-            name = "35"
-            width = 2
-        }
-    }
+    val b =  D()
+//    b.attr {} // overload resolution ambiguity
+
+    val d = b.attr
+    d {}      // no error
 }
+
+
+
