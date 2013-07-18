@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package grammar.c4.depr
+package grammar.c4.kara.depr
 import grammar.c4.kara.*
 import jet.deprecated as depr
 
